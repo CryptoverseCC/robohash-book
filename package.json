@@ -1,8 +1,8 @@
 {
-  "name": "crypto-purr",
+  "name": "robohash",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://userfeeds.github.io/cryptopurr",
+  "homepage": "https://userfeeds.github.io/robohash-book/",
   "dependencies": {
     "dompurify": "^1.0.3",
     "gh-pages": "^1.1.0",
