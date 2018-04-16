@@ -7,7 +7,7 @@ const {
 } = process.env;
 
 const roboHashTokenArtifacts = require('./abi/RoboHashToken.json');
-const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io'));
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io'));
 const contractInstance = new web3.eth.Contract(roboHashTokenArtifacts, ERC_721_ADDRESS);
 
 export const getEntityData = async entityId => {
