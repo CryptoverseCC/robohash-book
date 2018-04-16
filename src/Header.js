@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ActiveEntityAvatar, ActiveEntityName, IfActiveEntity, Entities, EntityAvatar, EntityName } from './Entity';
 import TranslationsContext from './Translations';
+import WithRouter from './WithRouter';
 
 const Header = () => {
   return (
@@ -30,13 +31,39 @@ const Header = () => {
         <IfActiveEntity
           then={() => <CatDropdown />}
           other={
-            <TranslationsContext.Consumer>
-              {({ noEntitiesError }) => <ErrorStatus message={noEntitiesError} />}
-            </TranslationsContext.Consumer>
+            <div className="column has-text-right">
+              <NewEntityButton _onClick={()=>{}}/>
+            </div>
           }
         />
       </div>
     </div>
+  );
+};
+
+const NewEntityButton = ({ _onClick }) => {
+  return (
+    <WithRouter>
+      {({ history }) => (
+        <button
+          className="dropdown-item cp-dropdown-item"
+          onClick={() => { 
+            _onClick();
+            history.push('/new');
+          }}
+          style={{
+            border: 'none',
+            background: 'none',
+            outline: 'none',
+            cursor: 'pointer',
+            marginLeft: 'auto',
+            borderRadius: '33px'
+          }}
+        >
+          Create Bot!
+        </button>
+      )}
+    </WithRouter>
   );
 };
 
@@ -76,6 +103,7 @@ const CatDropdown = () => {
     <div className="has-text-right column" style={{ color: '#1B2437' }}>
       <Dropdown toggle={({ openDropdown }) => <CatDropdownToggle openDropdown={openDropdown} />}>
         {({ closeDropdown }) => (
+        <div>
           <Entities>
             {({ entities, changeActiveEntityTo }) =>
               entities.map(entity => (
@@ -111,6 +139,8 @@ const CatDropdown = () => {
               ))
             }
           </Entities>
+          <NewEntityButton _onClick = {closeDropdown} />
+          </div>
         )}
       </Dropdown>
     </div>

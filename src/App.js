@@ -4,6 +4,7 @@ import isEqual from 'lodash/isEqual';
 import Context from './Context';
 import IndexPage from './IndexPage';
 import ShowPage from './ShowPage';
+import NewPage from './NewPage'
 import { getMyEntities, getWeb3State, sendMessage, reply, react, label, getLabels } from './api';
 import { getEntityData } from './entityApi';
 import Header from './Header';
@@ -212,6 +213,7 @@ export default class App extends Component {
           <React.Fragment>
             <Header />
             <Switch>
+              <Route exact path="/new" component={NewPage} />
               <Route exact path="/:entityId" component={renderShowPage} />
               <Route exact path="/" component={renderIndexPage} />
             </Switch>

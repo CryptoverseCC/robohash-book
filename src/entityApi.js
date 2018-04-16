@@ -1,6 +1,7 @@
 import React from 'react';
 import etherDiamond from './img/ether-diamond.gif';
 import Web3 from 'web3';
+import { getWeb3State } from './api';
 const {
   REACT_APP_ERC_721_ADDRESS: ERC_721_ADDRESS,
 } = process.env;
@@ -17,14 +18,20 @@ export const getEntityData = async entityId => {
     return {
       id: entityId,
       name: tokenName,
-      image_url: tokenUrl, // image of our entity
-      url: `https://robohash.org`, // website with details about particular entity
-      color: '#333333' // background color 
+      image_url: tokenUrl,
+      url: `https://robohash.org`,
+      color: '#333333'
     };
   } catch (e) {
     console.error(e);
     return undefined;
   }
+};
+
+export const createRoboHash = async name => {
+  const { from, web3 } = await getWeb3State();
+  const contractInstance = new web3.eth.Contract(roboHashTokenArtifacts,  ERC_721_ADDRESS);
+  await contractInstance.methods.create(name).send({ from });
 };
 
 export const EntityIcon = entityId => {
@@ -42,5 +49,6 @@ export const avatarSizes = {
   verySmall: { containerSize: '32px', imgSize: '32px', imgTopOffset: '50%', imgLeftOffset: '50%' },
   small: { containerSize: '44px', imgSize: '44px', imgTopOffset: '50%', imgLeftOffset: '50%' },
   medium: { containerSize: '54px', imgSize: '54px', imgTopOffset: '50%', imgLeftOffset: '50%' },
-  large: { containerSize: '64px', imgSize: '64px', imgTopOffset: '50%', imgLeftOffset: '50%' }
+  large: { containerSize: '64px', imgSize: '64px', imgTopOffset: '50%', imgLeftOffset: '50%' },
+  veryLarge: { containerSize: '200px', imgSize: '200px', imgTopOffset: '50%', imgLeftOffset: '50%' }
 };

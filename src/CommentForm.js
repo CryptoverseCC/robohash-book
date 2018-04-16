@@ -121,6 +121,11 @@ export default class CommentForm extends React.Component {
     this.props.onSubmit && this.props.onSubmit();
   };
 
+  onChange = (e) => {
+    this.setState({ comment: e.target.value });
+    this.props.onChange && this.props.onChange(e);
+  };
+
   render() {
     const FormComponent = this.props.Form || Form;
     const TextAreaComponent = this.props.TextArea || StyledTextArea;
@@ -134,7 +139,7 @@ export default class CommentForm extends React.Component {
         <TextAreaComponent
           placeholder={this.props.placeholder}
           value={this.state.comment}
-          onChange={e => this.setState({ comment: e.target.value })}
+          onChange={this.onChange}
           onKeyPress={e => e.key === 'Enter' && e.ctrlKey && this.submitForm()}
         />
         <MetamaskButton disabled={!this.state.comment} type="submit" />
