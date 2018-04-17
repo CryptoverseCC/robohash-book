@@ -1,5 +1,5 @@
 import React from 'react';
-import CommentForm from './CommentForm';
+import CommentForm, { ReplyStyledTextArea, StyledReplyForm } from './CommentForm';
 import IdentityAvatar from './Avatar';
 import { createRoboHash } from './entityApi';
 import WithRouter from './WithRouter';
@@ -29,18 +29,8 @@ export default class NewPage extends React.Component {
             <WithRouter>
               {({ history }) => (
                 <CommentForm
-                  style={{
-                    backgroundColor: 'rgba(246,244,255,0.7)',
-                    width: '100%',
-                    padding: '16px',
-                    borderRadius: '12px',
-                    alignItems: 'center',
-                    marginTop: '20px'
-                  }}
-                  inputStyle={{
-                    fontSize: '16px',
-                    fontWeight: 'normal'
-                  }}
+                  TextArea={ReplyStyledTextArea}
+                  Form={StyledReplyForm}
                   onChange={this.onInputChange}
                   sendMessage={async name => {
                     await createRoboHash(name);

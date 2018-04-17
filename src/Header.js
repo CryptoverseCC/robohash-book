@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ActiveEntityAvatar, ActiveEntityName, IfActiveEntity, Entities, EntityAvatar, EntityName } from './Entity';
-import TranslationsContext from './Translations';
-import WithRouter from './WithRouter';
 
 const Header = () => {
   return (
@@ -32,7 +30,7 @@ const Header = () => {
           then={() => <CatDropdown />}
           other={
             <div className="column has-text-right">
-              <NewEntityButton _onClick={()=>{}}/>
+              <NewEntityButton />
             </div>
           }
         />
@@ -41,29 +39,25 @@ const Header = () => {
   );
 };
 
-const NewEntityButton = ({ _onClick }) => {
+const NewEntityButton = ({ onClick, style = {} }) => {
   return (
-    <WithRouter>
-      {({ history }) => (
-        <button
-          className="dropdown-item cp-dropdown-item"
-          onClick={() => { 
-            _onClick();
-            history.push('/new');
-          }}
-          style={{
-            border: 'none',
-            background: 'none',
-            outline: 'none',
-            cursor: 'pointer',
-            marginLeft: 'auto',
-            borderRadius: '33px'
-          }}
-        >
-          Create Bot!
-        </button>
-      )}
-    </WithRouter>
+    <Link
+      onClick={onClick}
+      className="dropdown-item cp-dropdown-item"
+      to="/new"
+      style={{
+        border: 'none',
+        background: 'none',
+        outline: 'none',
+        cursor: 'pointer',
+        marginLeft: 'auto',
+        borderRadius: '33px',
+        display: 'inline-flex',
+        ...style
+      }}
+    >
+      Create Bot!
+    </Link>
   );
 };
 
@@ -103,43 +97,43 @@ const CatDropdown = () => {
     <div className="has-text-right column" style={{ color: '#1B2437' }}>
       <Dropdown toggle={({ openDropdown }) => <CatDropdownToggle openDropdown={openDropdown} />}>
         {({ closeDropdown }) => (
-        <div>
-          <Entities>
-            {({ entities, changeActiveEntityTo }) =>
-              entities.map(entity => (
-                <button
-                  key={entity.id}
-                  className="dropdown-item cp-dropdown-item"
-                  onClick={() => {
-                    changeActiveEntityTo(entity.id);
-                    closeDropdown();
-                  }}
-                  style={{
-                    border: 'none',
-                    background: 'none',
-                    outline: 'none',
-                    margin: 0,
-                    width: '100%',
-                    borderRadius: '33px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <div
+          <div>
+            <Entities>
+              {({ entities, changeActiveEntityTo }) =>
+                entities.map(entity => (
+                  <button
+                    key={entity.id}
+                    className="dropdown-item cp-dropdown-item"
+                    onClick={() => {
+                      changeActiveEntityTo(entity.id);
+                      closeDropdown();
+                    }}
                     style={{
-                      display: 'flex',
-                      alignItems: 'center'
+                      border: 'none',
+                      background: 'none',
+                      outline: 'none',
+                      margin: 0,
+                      width: '100%',
+                      borderRadius: '33px',
+                      cursor: 'pointer'
                     }}
                   >
-                    <EntityAvatar id={entity.id} size="small" lazy={false} />
-                    <b style={{ marginLeft: '5px' }}>
-                      <EntityName id={entity.id} />
-                    </b>
-                  </div>
-                </button>
-              ))
-            }
-          </Entities>
-          <NewEntityButton _onClick = {closeDropdown} />
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <EntityAvatar id={entity.id} size="small" lazy={false} />
+                      <b style={{ marginLeft: '5px' }}>
+                        <EntityName id={entity.id} />
+                      </b>
+                    </div>
+                  </button>
+                ))
+              }
+            </Entities>
+            <NewEntityButton onClick={closeDropdown} style={{ display: 'flex' }} />
           </div>
         )}
       </Dropdown>
